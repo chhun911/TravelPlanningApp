@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +23,7 @@ public class ListTravelPlan {
         try (PrintWriter writer = new PrintWriter(new FileWriter("ListTravelPlan.csv", true))) {
             System.out.print("Enter the Number of Travel Plans (Enter 0 to Exit): ");
             int n = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine(); 
 
             if (n > 0) {
                 ArrayList<TravelPlan> plans = new ArrayList<>();
@@ -32,7 +34,7 @@ public class ListTravelPlan {
 
                     System.out.print("Enter Year for Your Plan " + (i + 1) + ": ");
                     int year = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine(); 
 
                     System.out.print("Enter Continent for Your Plan " + (i + 1) + ": ");
                     String continent = scanner.nextLine();
@@ -40,25 +42,62 @@ public class ListTravelPlan {
                     plans.add(new TravelPlan(season, year, continent));
                 }
 
-                // Display all plans together
-                System.out.println("\nYour Travel Plans:");
+                System.out.println("\nYour New Travel Plans:");
                 for (int i = 0; i < plans.size(); i++) {
                     TravelPlan plan = plans.get(i);
                     System.out.println(" Plan " + (i + 1) + ":");
                     System.out.println("Season: " + plan.season);
                     System.out.println("Year: " + plan.year);
-                    System.out.println("continent : " + plan.continent);
+                    System.out.println("Continent: " + plan.continent);
                     System.out.println();
 
-                    // Write to CSV
+
                     writer.println(plan.season + "," + plan.year + "," + plan.continent);
                 }
                 writer.flush();
-                System.out.println("All data has been saved to Destination.csv");
+                System.out.println("All new data has been saved to ListTravelPlan.csv");
+                
+
+                displayAllTravelPlans();
+            } else {
+
+                displayAllTravelPlans();
             }
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file.");
             e.printStackTrace();
+        }
+    }
+    private void displayAllTravelPlans() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ListTravelPlan.csv"))) {
+            String line;
+
+            ArrayList<String[]> allPlans = new ArrayList<>();
+    
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3) {
+                    allPlans.add(parts);
+                }
+            }
+            System.out.println("\n===== All Your Travel Plans =====");
+            if (allPlans.isEmpty()) {
+                System.out.println("No travel plans found.");
+            } else {
+                for (int i = 0; i < allPlans.size(); i++) {
+                    String[] plan = allPlans.get(i);
+                    System.out.println(" Plan " + (i + 1) + ":");
+                    System.out.println("Season: " + plan[0]);
+                    System.out.println("Year: " + plan[1]);
+                    System.out.println("Continent: " + plan[2]);
+                    System.out.println();
+                }
+                System.out.println("Total number of plans: " + allPlans.size());
+            }
+            System.out.println("================================");
+            
+        } catch (IOException e) {
+            System.out.println("No saved travel plans found or an error occurred while reading the file.");
         }
     }
 }
