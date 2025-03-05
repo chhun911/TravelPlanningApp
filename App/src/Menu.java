@@ -13,12 +13,14 @@ public class Menu {
     private final String userDataPath;
     private final ViewListTravelPlan viewListTravelPlan;
     private final ActivityNotes activityNotes;
+    private final ViewActivity viewActivity; // Add this field
 
     public Menu(String userDataPath) {
         this.userDataPath = userDataPath;
         this.listTravelPlan = new ListTravelPlan(userDataPath);
         this.viewListTravelPlan = new ViewListTravelPlan(userDataPath);
         this.activityNotes = new ActivityNotes(userDataPath);
+        this.viewActivity = new ViewActivity(userDataPath); // Initialize ViewActivity
     }
 
     public void displayMenu(Scanner scanner) {
@@ -30,7 +32,8 @@ public class Menu {
             System.out.println("4. List Travel Plans");
             System.out.println("5. View Travel Plans");
             System.out.println("6. Add activity of your plans");
-            System.out.println("7. Exit");
+            System.out.println("7. View activity of your plans");
+            System.out.println("8. Exit");
             System.out.print("Please choose an option: ");
 
             int choice = scanner.nextInt();
@@ -44,7 +47,8 @@ public class Menu {
                     AddDestination.addDestination(scanner, userDataPath);
                     break;
                 case 3:
-                    System.out.println("not yet implemented");
+                    DeleteDestination deleteDestination = new DeleteDestination(userDataPath);
+                    deleteDestination.deleteDestination();
                     break;
                 case 4:
                     listTravelPlan.listing(scanner);
@@ -56,8 +60,12 @@ public class Menu {
                     activityNotes.addActivityNotes();
                     break;
                 case 7:
+                    viewActivity.viewActivities();
+                    break;
+                case 8:
                     System.out.println("Exiting the application. Goodbye!");
                     return;
+
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }

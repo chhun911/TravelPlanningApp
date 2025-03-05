@@ -113,6 +113,4 @@ public class ActivityNotes {
             System.out.println("Error saving activity notes: " + e.getMessage());
         }
     }
-
-    // ... helper methods follow ...
 }
