@@ -11,7 +11,7 @@ public class ListTravelPlan {
     void listing(Scanner scanner) {
         String filePath = userDataPath + File.separator + "ListTravelPlan.csv";
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
-            System.out.print("Enter the Number of Travel Plans (Enter 0 to Exit): ");
+            System.out.print("Enter the Number of Travel Plans: ");
             int n = scanner.nextInt();
             scanner.nextLine();
 
