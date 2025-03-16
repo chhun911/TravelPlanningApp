@@ -128,13 +128,9 @@ public class ActivityNotes {
         List<String[]> activities = new ArrayList<>();
         for (int i = 1; i <= days; i++) {
             System.out.println("\nDay " + i + ":");
-            int numActivities = getValidNumber("Enter number of activities for day " + i + ": ", 1, Integer.MAX_VALUE);
-            for (int j = 1; j <= numActivities; j++) {
-                System.out.println("Activity " + j + ":");
-                String activity = getUserInput("Enter activity: ");
-                String time = getUserInput("Enter time: ");
-                activities.add(new String[] { String.valueOf(i), activity, time });
-            }
+            String activity = getUserInput("Enter activity: ");
+            String time = getUserInput("Enter time: ");
+            activities.add(new String[] { activity, time });
         }
         return activities;
     }
@@ -143,7 +139,7 @@ public class ActivityNotes {
         File file = new File(userDataPath + File.separator + ACTIVITY_NOTES_FILE);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             for (String[] activity : activities) {
-                writer.write(planNumber + "," + activity[0] + "," + city + "," + country + "," + activity[1] + "," + activity[2]);
+                writer.write(planNumber + "," + city + "," + country + "," + activity[0] + "," + activity[1]);
                 writer.newLine();
             }
         } catch (IOException e) {

@@ -10,7 +10,6 @@ public class Menu {
     };
 
     private final String userDataPath;
-    private final String currentUser;
     private final ListTravelPlan listTravelPlan;
     private final ViewListTravelPlan viewListTravelPlan;
     private final ActivityNotes activityNotes;
@@ -21,7 +20,6 @@ public class Menu {
 
     public Menu(String userDataPath, String currentUser) {
         this.userDataPath = userDataPath;
-        this.currentUser = currentUser;
         this.listTravelPlan = new ListTravelPlan(userDataPath);
         this.viewListTravelPlan = new ViewListTravelPlan(userDataPath);
         this.activityNotes = new ActivityNotes(userDataPath);
@@ -34,17 +32,20 @@ public class Menu {
     public void displayMenu(Scanner scanner) {
         while (true) {
             System.out.println("\nMenu:");
-            System.out.println("1. View Destinations");
-            System.out.println("2. Add Destinations");
-            System.out.println("3. Delete Destinations");
-            System.out.println("4. Add List Travel Plans");
-            System.out.println("5. View List Travel Plans");
+            System.out.println("1. Add Destinations");
+            System.out.println("2. Delete Destinations");
+            System.out.println("3. Edit Destinations ");
+            System.out.println("4. View Destinations ");
+            System.out.println("5. Add List Travel Plans");
             System.out.println("6. Delete List Travel Plans");
-            System.out.println("7. Add activity of your plans");
-            System.out.println("8. View activity of your plans");
-            System.out.println("9. Delete activity of your plans");
-            System.out.println("10. Share your plans");
-            System.out.println("11. View Shared Travel Plans with Activities");
+            System.out.println("7. Edit List Travel Plans");
+            System.out.println("8. View List Travel Plans");
+            System.out.println("9. Add activity of your plans");
+            System.out.println("10. Delete activity of your plans");
+            System.out.println("11. Edit activity of your plans");
+            System.out.println("12. View activity of your plans");
+            System.out.println("13. Share your plans");
+            System.out.println("14. View Shared Travel Plans with Activities");
             System.out.println("0. Exit");
 
             System.out.print("Please choose an option: ");
@@ -54,38 +55,49 @@ public class Menu {
 
             switch (choice) {
                 case 1:
-                    ViewDestination.viewDestinations(userDataPath);
-                    break;
-                case 2:
                     AddDestination.addDestination(scanner, userDataPath);
                     break;
-                case 3:
+                case 2:
                     DeleteDestination deleteDestination = new DeleteDestination(userDataPath);
                     deleteDestination.deleteDestination();
                     break;
+                case 3:
+                    EditDestinations editDestinations = new EditDestinations(userDataPath);
+                    editDestinations.editDestinations(scanner);
+                    break;
                 case 4:
-                    listTravelPlan.listing(scanner);
+                    ViewDestination.viewDestinations(userDataPath);
                     break;
                 case 5:
-                    viewListTravelPlan.viewPlans();
+                    listTravelPlan.listing(scanner);
                     break;
                 case 6:
                     DeleteListTravelPlan deleteListTravelPlan = new DeleteListTravelPlan(userDataPath);
                     deleteListTravelPlan.deleteTravelPlan(scanner);
                     break;
                 case 7:
-                    activityNotes.addActivityNotes();
+                    EditListTravelPlan editListTravelPlan = new EditListTravelPlan(userDataPath);
+                    editListTravelPlan.editTravelPlans(scanner);
                     break;
                 case 8:
-                    viewActivity.viewActivities();
+                    viewListTravelPlan.viewPlans();
                     break;
                 case 9:
-                    deleteActivity.deleteActivity(scanner);
+                    activityNotes.addActivityNotes();
                     break;
                 case 10:
-                    shareTravelPlan.sharePlan(scanner);
+                    deleteActivity.deleteActivity(scanner);
                     break;
                 case 11:
+                    activityNotes.editActivityNotes();
+                    break;
+                case 12:
+                    viewActivity.viewActivities();
+                    break;
+                case 13:
+                    shareTravelPlan.sharePlan(scanner);
+                    break;
+                case 14:
                     viewSharedTravelPlan.viewSharedPlans();
                     break;
                 case 0:

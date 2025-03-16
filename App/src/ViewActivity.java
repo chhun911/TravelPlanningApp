@@ -61,17 +61,23 @@ public class ViewActivity {
         List<String> lines = Files.readAllLines(activityPath);
         for (String line : lines) {
             String[] parts = line.split(",");
-            if (parts.length >= 5) {
-                int planNumber = Integer.parseInt(parts[0].trim());
-                ActivityNote note = new ActivityNote(
-                        parts[1].trim(), // city
-                        parts[2].trim(), // country
-                        parts[3].trim(), // activity
-                        parts[4].trim() // time
-                );
+            if (parts.length >= 6) {
+                try {
+                    int planNumber = Integer.parseInt(parts[0].trim());
+                    int day = Integer.parseInt(parts[1].trim());
+                    String city = parts[2].trim();
+                    String country = parts[3].trim();
+                    String activity = parts[4].trim();
+                    String time = parts[5].trim();
 
-                activities.computeIfAbsent(planNumber, k -> new ArrayList<>())
-                        .add(note);
+                    ActivityNote note = new ActivityNote(day, city, country, activity, time);
+                    activities.computeIfAbsent(planNumber, k -> new ArrayList<>()).add(note);
+                    System.out.println("Loaded activity for plan " + planNumber + ": " + Arrays.toString(parts));
+                } catch (NumberFormatException e) {
+                    System.err.println("Error parsing activity note: " + Arrays.toString(parts));
+                }
+            } else {
+                System.err.println("Invalid activity note format: " + Arrays.toString(parts));
             }
         }
         return activities;
@@ -98,7 +104,7 @@ public class ViewActivity {
                 System.out.println("\nActivities:");
                 displayActivities(planActivities);
             } else {
-                System.out.println("\nNo activities planned yet.");
+                System.out.println("\nNo activities planned yet for Plan " + planNumber + ".");
             }
             System.out.println(SEPARATOR);
         }
@@ -107,14 +113,19 @@ public class ViewActivity {
     private void displayActivities(List<ActivityNote> activities) {
         String currentCity = "";
         String currentCountry = "";
+        int currentDay = -1;
 
         for (ActivityNote note : activities) {
+            if (note.day != currentDay) {
+                currentDay = note.day;
+                System.out.printf("\nDay %d:%n", currentDay);
+            }
             if (!note.city.equals(currentCity) || !note.country.equals(currentCountry)) {
                 currentCity = note.city;
                 currentCountry = note.country;
-                System.out.printf("\nLocation: %s, %s%n", currentCity, currentCountry);
+                System.out.printf("Location: %s, %s%n", currentCity, currentCountry);
             }
-            System.out.printf("  - %s at %s%n", note.activity, note.time);
+            System.out.printf("  - Activity: %s at %s%n", note.activity, note.time);
         }
     }
 
@@ -131,12 +142,14 @@ public class ViewActivity {
     }
 
     private static class ActivityNote {
+        final int day;
         final String city;
         final String country;
         final String activity;
         final String time;
 
-        ActivityNote(String city, String country, String activity, String time) {
+        ActivityNote(int day, String city, String country, String activity, String time) {
+            this.day = day;
             this.city = city;
             this.country = country;
             this.activity = activity;
