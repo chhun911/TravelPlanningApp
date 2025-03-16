@@ -27,10 +27,18 @@ public class EditListTravelPlan {
                     int year = scanner.nextInt();
                     scanner.nextLine();
 
+                    System.out.print("Enter Month for Your Plan " + (i + 1) + " (1-12): ");
+                    int month = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Enter Day for Your Plan " + (i + 1) + " (1-31): ");
+                    int day = scanner.nextInt();
+                    scanner.nextLine();
+
                     System.out.print("Enter Continent for Your Plan " + (i + 1) + ": ");
                     String continent = scanner.nextLine();
 
-                    plans.add(new String[] { season, String.valueOf(year), continent });
+                    plans.add(new String[] { season, String.valueOf(year), String.valueOf(month), String.valueOf(day), continent });
                 }
 
                 System.out.println("\nYour New Travel Plans:");
@@ -39,10 +47,12 @@ public class EditListTravelPlan {
                     System.out.println("Plan " + (i + 1) + ":");
                     System.out.println("Season: " + plan[0]);
                     System.out.println("Year: " + plan[1]);
-                    System.out.println("Continent: " + plan[2]);
+                    System.out.println("Month: " + plan[2]);
+                    System.out.println("Day: " + plan[3]);
+                    System.out.println("Continent: " + plan[4]);
                     System.out.println();
 
-                    writer.println(plan[0] + "," + plan[1] + "," + plan[2]);
+                    writer.println(plan[0] + "," + plan[1] + "," + plan[2] + "," + plan[3] + "," + plan[4]);
                 }
                 writer.flush();
                 System.out.println("All new plans have been saved to your personal travel plans");
@@ -76,10 +86,16 @@ public class EditListTravelPlan {
         System.out.print("Enter new year (current: " + parts[1] + "): ");
         int newYear = scanner.nextInt();
         scanner.nextLine(); // Consume newline
-        System.out.print("Enter new continent (current: " + parts[2] + "): ");
+        System.out.print("Enter new month (current: " + parts[2] + "): ");
+        int newMonth = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter new day (current: " + parts[3] + "): ");
+        int newDay = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter new continent (current: " + parts[4] + "): ");
         String newContinent = scanner.nextLine().trim();
 
-        travelPlans.set(planNumber - 1, newSeason + "," + newYear + "," + newContinent);
+        travelPlans.set(planNumber - 1, newSeason + "," + newYear + "," + newMonth + "," + newDay + "," + newContinent);
         saveTravelPlans(travelPlans);
         System.out.println("Travel plan updated successfully!");
     }
@@ -99,8 +115,9 @@ public class EditListTravelPlan {
         System.out.println("\nCurrent travel plans:");
         for (int i = 0; i < travelPlans.size(); i++) {
             String[] parts = travelPlans.get(i).split(",");
-            if (parts.length >= 3) {
-                System.out.printf("%d. Season: %s, Year: %s, Continent: %s%n", i + 1, parts[0], parts[1], parts[2]);
+            if (parts.length >= 5) {
+                System.out.printf("%d. Season: %s, Year: %s, Month: %s, Day: %s, Continent: %s%n",
+                        i + 1, parts[0], parts[1], parts[2], parts[3], parts[4]);
             }
         }
     }

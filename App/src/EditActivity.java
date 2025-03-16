@@ -1,13 +1,13 @@
 import java.io.*;
 import java.util.*;
 
-public class ActivityNotes {
+public class EditActivity {
     private static final String LIST_TRAVEL_PLAN = "ListTravelPlan.csv";
     private static final String ACTIVITY_NOTES_FILE = "activities.csv";
     private final Scanner scanner;
     private final String userDataPath;
 
-    public ActivityNotes(String userDataPath) {
+    public EditActivity(String userDataPath) {
         this.userDataPath = userDataPath;
         this.scanner = new Scanner(System.in);
     }

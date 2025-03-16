@@ -17,6 +17,7 @@ public class Menu {
     private final DeleteActivity deleteActivity;
     private final ShareTravelPlan shareTravelPlan;
     private final ViewSharedTravelPlan viewSharedTravelPlan;
+    private final CalendarReminder calendarReminder;
 
     public Menu(String userDataPath, String currentUser) {
         this.userDataPath = userDataPath;
@@ -27,6 +28,7 @@ public class Menu {
         this.deleteActivity = new DeleteActivity(userDataPath);
         this.shareTravelPlan = new ShareTravelPlan(userDataPath, currentUser);
         this.viewSharedTravelPlan = new ViewSharedTravelPlan();
+        this.calendarReminder = new CalendarReminder(userDataPath);
     }
 
     public void displayMenu(Scanner scanner) {
@@ -34,8 +36,8 @@ public class Menu {
             System.out.println("\nMenu:");
             System.out.println("1. Add Destinations");
             System.out.println("2. Delete Destinations");
-            System.out.println("3. Edit Destinations ");
-            System.out.println("4. View Destinations ");
+            System.out.println("3. Edit Destinations");
+            System.out.println("4. View Destinations");
             System.out.println("5. Add List Travel Plans");
             System.out.println("6. Delete List Travel Plans");
             System.out.println("7. Edit List Travel Plans");
@@ -46,6 +48,7 @@ public class Menu {
             System.out.println("12. View activity of your plans");
             System.out.println("13. Share your plans");
             System.out.println("14. View Shared Travel Plans with Activities");
+            System.out.println("15. See How many days you have left for your trip");
             System.out.println("0. Exit");
 
             System.out.print("Please choose an option: ");
@@ -99,6 +102,9 @@ public class Menu {
                     break;
                 case 14:
                     viewSharedTravelPlan.viewSharedPlans();
+                    break;
+                case 15:
+                    calendarReminder.displayCountdown();
                     break;
                 case 0:
                     System.out.println("Exiting the application. Goodbye!");

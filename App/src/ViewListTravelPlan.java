@@ -23,7 +23,7 @@ public class ViewListTravelPlan {
 
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3) {
+                if (parts.length >= 5) {
                     allPlans.add(parts);
                 }
             }
@@ -40,7 +40,9 @@ public class ViewListTravelPlan {
                     System.out.println("Plan " + (i + 1) + ":");
                     System.out.println("Season: " + plan[0]);
                     System.out.println("Year: " + plan[1]);
-                    System.out.println("Continent: " + plan[2]);
+                    System.out.println("Month: " + plan[2]);
+                    System.out.println("Day: " + plan[3]);
+                    System.out.println("Continent: " + plan[4]);
                     System.out.println();
                 }
             }
@@ -61,5 +63,10 @@ public class ViewListTravelPlan {
         System.out.println("\nViewing your personal travel plans...");
         showAll();
         System.out.println("Press Enter to return to the main menu...");
+    }
+
+    public void daysLeft() {
+
+        throw new UnsupportedOperationException("Unimplemented method 'daysLeft'");
     }
 }

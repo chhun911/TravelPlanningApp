@@ -26,10 +26,18 @@ public class ListTravelPlan {
                     int year = scanner.nextInt();
                     scanner.nextLine();
 
+                    System.out.print("Enter Month for Your Plan " + (i + 1) + " (1-12): ");
+                    int month = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Enter Day for Your Plan " + (i + 1) + " (1-31): ");
+                    int day = scanner.nextInt();
+                    scanner.nextLine();
+
                     System.out.print("Enter Continent for Your Plan " + (i + 1) + ": ");
                     String continent = scanner.nextLine();
 
-                    plans.add(new String[] { season, String.valueOf(year), continent });
+                    plans.add(new String[] { season, String.valueOf(year), String.valueOf(month), String.valueOf(day), continent });
                 }
 
                 System.out.println("\nYour New Travel Plans:");
@@ -38,10 +46,12 @@ public class ListTravelPlan {
                     System.out.println("Plan " + (i + 1) + ":");
                     System.out.println("Season: " + plan[0]);
                     System.out.println("Year: " + plan[1]);
-                    System.out.println("Continent: " + plan[2]);
+                    System.out.println("Month: " + plan[2]);
+                    System.out.println("Day: " + plan[3]);
+                    System.out.println("Continent: " + plan[4]);
                     System.out.println();
 
-                    writer.println(plan[0] + "," + plan[1] + "," + plan[2]);
+                    writer.println(plan[0] + "," + plan[1] + "," + plan[2] + "," + plan[3] + "," + plan[4]);
                 }
                 writer.flush();
                 System.out.println("All new plans have been saved to your personal travel plans");
