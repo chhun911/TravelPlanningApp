@@ -72,7 +72,6 @@ public class ViewActivity {
 
                     ActivityNote note = new ActivityNote(day, city, country, activity, time);
                     activities.computeIfAbsent(planNumber, k -> new ArrayList<>()).add(note);
-                    System.out.println("Loaded activity for plan " + planNumber + ": " + Arrays.toString(parts));
                 } catch (NumberFormatException e) {
                     System.err.println("Error parsing activity note: " + Arrays.toString(parts));
                 }
@@ -111,21 +110,27 @@ public class ViewActivity {
     }
 
     private void displayActivities(List<ActivityNote> activities) {
-        String currentCity = "";
-        String currentCountry = "";
-        int currentDay = -1;
+        Map<Integer, Map<String, List<ActivityNote>>> groupedActivities = new TreeMap<>();
 
         for (ActivityNote note : activities) {
-            if (note.day != currentDay) {
-                currentDay = note.day;
-                System.out.printf("\nDay %d:%n", currentDay);
+            groupedActivities
+                .computeIfAbsent(note.day, k -> new TreeMap<>())
+                .computeIfAbsent(note.city + ", " + note.country, k -> new ArrayList<>())
+                .add(note);
+        }
+
+        for (Map.Entry<Integer, Map<String, List<ActivityNote>>> dayEntry : groupedActivities.entrySet()) {
+            int day = dayEntry.getKey();
+            System.out.printf("\nDay %d:%n", day);
+
+            for (Map.Entry<String, List<ActivityNote>> locationEntry : dayEntry.getValue().entrySet()) {
+                String location = locationEntry.getKey();
+                System.out.printf("Location: %s%n", location);
+
+                for (ActivityNote note : locationEntry.getValue()) {
+                    System.out.printf("  - Activity: %s at %s%n", note.activity, note.time);
+                }
             }
-            if (!note.city.equals(currentCity) || !note.country.equals(currentCountry)) {
-                currentCity = note.city;
-                currentCountry = note.country;
-                System.out.printf("Location: %s, %s%n", currentCity, currentCountry);
-            }
-            System.out.printf("  - Activity: %s at %s%n", note.activity, note.time);
         }
     }
 

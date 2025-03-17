@@ -16,8 +16,9 @@ public class Menu {
     private final ViewActivity viewActivity;
     private final DeleteActivity deleteActivity;
     private final ShareTravelPlan shareTravelPlan;
-    private final ViewSharedTravelPlan viewSharedTravelPlan;
     private final CalendarReminder calendarReminder;
+    private final EditActivity editActivity;
+    private final ViewSharedTravelPlan viewSharedTravelPlan;
 
     public Menu(String userDataPath, String currentUser) {
         this.userDataPath = userDataPath;
@@ -27,8 +28,9 @@ public class Menu {
         this.viewActivity = new ViewActivity(userDataPath);
         this.deleteActivity = new DeleteActivity(userDataPath);
         this.shareTravelPlan = new ShareTravelPlan(userDataPath, currentUser);
-        this.viewSharedTravelPlan = new ViewSharedTravelPlan();
         this.calendarReminder = new CalendarReminder(userDataPath);
+        this.editActivity = new EditActivity(userDataPath);
+        this.viewSharedTravelPlan = new ViewSharedTravelPlan();
     }
 
     public void displayMenu(Scanner scanner) {
@@ -46,8 +48,8 @@ public class Menu {
             System.out.println("10. Delete activity of your plans");
             System.out.println("11. Edit activity of your plans");
             System.out.println("12. View activity of your plans");
-            System.out.println("13. Share your plans");
-            System.out.println("14. View Shared Travel Plans with Activities");
+            System.out.println("13. Share Travel Plan and activities");
+            System.out.println("14. View Shared Travel Plans and Activities");
             System.out.println("15. See How many days you have left for your trip");
             System.out.println("0. Exit");
 
@@ -92,17 +94,19 @@ public class Menu {
                     deleteActivity.deleteActivity(scanner);
                     break;
                 case 11:
-                    activityNotes.editActivityNotes();
+                    editActivity.editActivityNotes(); // Call editActivityNotes method
                     break;
                 case 12:
                     viewActivity.viewActivities();
                     break;
-                case 13:
+                    case 13:
                     shareTravelPlan.sharePlan(scanner);
                     break;
+                   
                 case 14:
-                    viewSharedTravelPlan.viewSharedPlans();
+                viewSharedTravelPlan.viewSharedPlans();
                     break;
+
                 case 15:
                     calendarReminder.displayCountdown();
                     break;
