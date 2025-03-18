@@ -54,12 +54,18 @@ public class ViewSharedTravelPlan {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",", 6);
-                if (parts.length >= 6) {
-                    String planIdentifier = parts[1] + "," + parts[2] + "," + parts[3] + "," + parts[4]; // Match travel
-                                                                                                         // plan format
-                    String activityDetail = parts[4] + " at " + parts[5];
+                String[] parts = line.split(",");
+                if (parts.length >= 8) { // At least 8 parts for a valid shared activity
+                    // The first three parts form the plan identifier
+                    String planIdentifier = parts[0] + "," + parts[1] + "," + parts[2];
 
+                    // Create a human-readable activity description
+                    // parts[3] = day, parts[4] = city, parts[5] = country, parts[6] = activity,
+                    // parts[7] = time
+                    String activityDetail = String.format("Day %s - %s in %s, %s at %s",
+                            parts[3], parts[6], parts[4], parts[5], parts[7]);
+
+                    // Add to the activities map
                     activities.computeIfAbsent(planIdentifier, k -> new ArrayList<>()).add(activityDetail);
                 }
             }

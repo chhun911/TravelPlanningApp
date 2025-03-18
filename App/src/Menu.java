@@ -99,12 +99,12 @@ public class Menu {
                 case 12:
                     viewActivity.viewActivities();
                     break;
-                    case 13:
+                case 13:
                     shareTravelPlan.sharePlan(scanner);
                     break;
                    
                 case 14:
-                viewSharedTravelPlan.viewSharedPlans();
+                    viewSharedTravelPlan.viewSharedPlans();
                     break;
 
                 case 15:
