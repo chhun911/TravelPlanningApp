@@ -1,2 +1,2 @@
-# Project Name
-Huoth Sitha
+# Project Name Travel Planning App
+
