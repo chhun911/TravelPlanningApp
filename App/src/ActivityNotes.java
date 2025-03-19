@@ -64,7 +64,7 @@ public class ActivityNotes {
         System.out.println("\nTravel Plans:");
         for (int i = 0; i < plans.size(); i++) {
             String[] plan = plans.get(i);
-            System.out.println((i + 1) + ". " + plan[0] + " in " + plan[1] + " " + plan[2]);
+            System.out.println((i + 1) + ". " + plan[0] + " in " + plan[3] + "/" + plan[2] + "/" + plan[1] + " to " + plan[4] );
         }
     }
 
